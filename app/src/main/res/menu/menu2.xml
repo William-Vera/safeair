@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_seccion_1"
+            android:icon="@drawable/ic_air"
+            android:title="Aire"/>
+        <item
+            android:id="@+id/menu_seccion_2"
+            android:icon="@drawable/ic_gas"
+            android:title="Gases"/>
+        <item
+            android:id="@+id/menu_seccion_3"
+            android:icon="@drawable/ic_temperature"
+            android:title="Temperatura"/>
+        <item
+            android:id="@+id/menu_seccion_6"
+            android:icon="@drawable/ic_humedad"
+            android:title="Humedad"/>
+        <item
+            android:id="@+id/menu_seccion_4"
+            android:icon="@drawable/ic_acciones"
+            android:title="Acciones/Medidas"/>
+        <item
+            android:id="@+id/menu_seccion_5"
+            android:icon="@drawable/ic_history"
+            android:title="Historial"/>
+    </group>
+    <item
+        android:id="@+id/navigation_subheader"
+        android:title="Otras Opciones">
+        <menu>
+            <item
+                android:id="@+id/menu_opcion_1"
+                android:icon="@drawable/ic_settings"
+                android:title="Ajustes"/>
+            <item
+                android:id="@+id/menu_opcion_2"
+                android:icon="@drawable/ic_about"
+                android:title="Acerca de"/>
+        </menu>
+    </item>
+</menu>

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "58180935832",
+    "firebase_url": "https://safeair-4fcf5-default-rtdb.firebaseio.com",
+    "project_id": "safeair-4fcf5",
+    "storage_bucket": "safeair-4fcf5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58180935832:android:85bde30d455ab0cb9570ed",
+        "android_client_info": {
+          "package_name": "com.example.safeairmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4D-TbVPIY0wP8wg7AK7nb83Mo7xxqBwM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
