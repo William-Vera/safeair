@@ -6,6 +6,14 @@
     android:gravity="center"
     android:padding="16dp">
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Monitoreo en tiempo real de la Temperatura"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="750px"
