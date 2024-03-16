@@ -8,28 +8,84 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
+
+    <!-- Contenedor principal con fondo y sombra -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/backgroundLight">
+
+        <!-- Barra de herramientas -->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#9C27B0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/colorPrimary"
             app:menu="@menu/menu1"
             app:navigationIcon="@drawable/baseline_menu_24"
             app:title="SafeAir"
-            app:titleTextColor="#000000" />
+            app:titleTextColor="@android:color/white" />
+
+        <!-- Contenido principal -->
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <!-- Contenedor de bienvenida -->
+            <LinearLayout
+                android:id="@+id/layoutToHide"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Texto de bienvenida -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Bienvenido estimado usuario"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <!-- Imagen centrada -->
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/log"
+                    android:contentDescription="@string/app_name" />
+
+                <!-- Títulos -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Valores actuales"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!-- Valores -->
+                <TextView
+                    android:id="@+id/textViewValues"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
+
+    <!-- Menú de navegación -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -38,4 +94,6 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/cabecera"
         app:menu="@menu/menu2" />
+
 </androidx.drawerlayout.widget.DrawerLayout>
+

@@ -1,6 +1,9 @@
 package com.example.safeairmobile;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +14,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -26,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,11 +105,8 @@ public class FragmentTemperature extends Fragment {
         valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                DataSnapshot lastSnapshot = getLastSnapshot(snapshot);
-                if (lastSnapshot != null && lastSnapshot.hasChild("last_value3")) {
-                    float value = lastSnapshot.child("last_value3").getValue(Float.class);
-                    lastEntry = new Entry(0, value);
-                }
+                List<Float> values = getLastNSnapshotValues(snapshot, 7);
+                updateChart(values);
             }
 
             @Override
@@ -115,57 +117,81 @@ public class FragmentTemperature extends Fragment {
         databaseReference.addValueEventListener(valueEventListener);
     }
 
+    private List<Float> getLastNSnapshotValues(DataSnapshot snapshot, int n) {
+        List<Float> values = new ArrayList<>();
+        int count = 0;
+        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+            if (count >= snapshot.getChildrenCount() - n) {
+                if (dataSnapshot.hasChild("last_value3")) {
+                    float value = dataSnapshot.child("last_value3").getValue(Float.class);
+                    values.add(value);
+                }
+            }
+            count++;
+        }
+        return values;
+    }
+
     private void setupDataUpdateRunnable() {
         handler = new Handler();
         dataUpdateRunnable = new Runnable() {
             @Override
             public void run() {
-                updateChart();
-                handler.postDelayed(this, 1000); // Repetir cada 5 segundos
+                // Not needed for this implementation
             }
         };
-        handler.postDelayed(dataUpdateRunnable, 1000); // Iniciar después de 5 segundos
     }
 
-    private DataSnapshot getLastSnapshot(DataSnapshot snapshot) {
-        DataSnapshot lastSnapshot = null;
-        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-            lastSnapshot = dataSnapshot;
+    private void updateChart(List<Float> values) {
+        List<Entry> entries = new ArrayList<>();
+        for (int i = 0; i < values.size(); i++) {
+            entries.add(new Entry(i, values.get(i)));
         }
-        return lastSnapshot;
-    }
 
-    private void updateChart() {
-        if (lastEntry != null) {
-            List<Entry> entries = new ArrayList<>();
-            entries.add(lastEntry);
+        LineDataSet dataSet = new LineDataSet(entries, "Valor Actual");
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setDrawCircles(true);
+        dataSet.setCircleRadius(5f);
+        dataSet.setDrawCircleHole(false);
+        dataSet.setCubicIntensity(0.2f);
 
-            LineDataSet dataSet = new LineDataSet(entries, "Valor Actual");
-            dataSet.setMode(LineDataSet.Mode.LINEAR);
-            dataSet.setDrawCircles(true);
-            dataSet.setCircleRadius(5f);
-            dataSet.setDrawCircleHole(false);
-            dataSet.setCubicIntensity(0.2f);
+        dataSet.setValueTextSize(14f);
+        dataSet.setValueTextColor(Color.BLACK);
 
-            dataSet.setValueTextSize(14f); // Tamaño del texto
-            dataSet.setValueTextColor(Color.BLACK); // Color del texto
+        LineData lineData = new LineData(dataSet);
+        lineChart.setData(lineData);
+        lineChart.setExtraLeftOffset(0f);
+        lineChart.setExtraRightOffset(20f);
 
-            LineData lineData = new LineData(dataSet);
-            lineChart.setData(lineData);
-            lineChart.setExtraLeftOffset(0f);
-            lineChart.setExtraRightOffset(20f);
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
 
-            XAxis xAxis = lineChart.getXAxis();
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setDrawGridLines(false);
+        YAxis yAxisRight = lineChart.getAxisRight();
+        yAxisRight.setEnabled(false);
 
-            YAxis yAxisRight = lineChart.getAxisRight();
-            yAxisRight.setEnabled(false);
+        lineChart.getDescription().setEnabled(false);
+        lineChart.animateX(1000);
 
-            lineChart.getDescription().setEnabled(false);
-            lineChart.animateX(1000);
-            lineChart.invalidate();
+        // Actualizar el valor actual
+        if (!values.isEmpty()) {
+            float currentValue = values.get(values.size() - 1);
+            TextView currentValueTextView = getView().findViewById(R.id.currentValueTextView);
+            currentValueTextView.setText(String.format(Locale.getDefault(), "Valor Actual: %.2f", currentValue));
         }
+
+        // Configurar sombreado debajo de la línea
+        int startColor = Color.parseColor("#80ADD8E6");
+        int endColor = Color.TRANSPARENT;
+        GradientDrawable gradientDrawable = new GradientDrawable(
+                GradientDrawable.Orientation.BOTTOM_TOP,
+                new int[]{startColor, endColor}
+        );
+        gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{gradientDrawable});
+        lineChart.setBackground(layerDrawable);
+
+        lineChart.invalidate();
     }
 
     @Override

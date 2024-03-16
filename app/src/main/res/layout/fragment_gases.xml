@@ -3,22 +3,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="16dp">
 
+
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Monitoreo en tiempo real de Gases/Cocina"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@drawable/rounded_corner"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:gravity="center" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="202dp"
+        android:layout_height="137dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/img_4" />
+
+    <TextView
+        android:id="@+id/currentValueTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:padding="16dp"
+        android:gravity="center" />
+
+    <!-- FrameLayout para el gráfico -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="750px"
-        android:background="@drawable/bordes_dis">
+        android:layout_weight="1"
+        android:background="@drawable/rounded_corner">
 
+        <!-- LineChart -->
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChartt"
             android:layout_width="match_parent"
