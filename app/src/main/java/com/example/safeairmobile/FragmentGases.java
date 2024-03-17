@@ -189,7 +189,7 @@ public class FragmentGases extends Fragment {
         if (!values.isEmpty()) {
             float currentValue = values.get(values.size() - 1);
             TextView currentValueTextView = getView().findViewById(R.id.currentValueTextView);
-            currentValueTextView.setText(String.format(Locale.getDefault(), "Valor Actual: %.2f", currentValue));
+            currentValueTextView.setText(String.format(Locale.getDefault(), "Valor Actual: %.2f"+"ppm (Partes por millón)", currentValue));
         }
 
         int startColor = Color.parseColor("#80ADD8E6");

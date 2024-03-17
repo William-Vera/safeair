@@ -124,9 +124,9 @@ public class main_center extends AppCompatActivity implements NavigationView.OnN
     private String getLastValues(DataSnapshot snapshot) {
         Map<String, String> valueNames = new HashMap<>();
         valueNames.put("last_value1", "Calidad del aire");
-        valueNames.put("last_value2", "Humedad");
-        valueNames.put("last_value3", "Temperatura");
-        valueNames.put("last_value4", "Nivel de gases");
+        valueNames.put("last_value2", "Humedad (%RH)");
+        valueNames.put("last_value3", "Temperatura (°C)");
+        valueNames.put("last_value4", "Nivel de gases (ppm)");
 
         StringBuilder values = new StringBuilder();
         if (snapshot != null) {
@@ -135,7 +135,17 @@ public class main_center extends AppCompatActivity implements NavigationView.OnN
                 if (valueNames.containsKey(key)) {
                     String valueName = valueNames.get(key);
                     String value = String.valueOf(childSnapshot.getValue());
-                    values.append(valueName).append(": ").append(value).append("\n");
+                    values.append(valueName).append(": ").append(value);
+                    if (key.equals("last_value3")) {
+                        values.append("°C");
+                    } else if (key.equals("last_value4")) {
+                        values.append("ppm");
+                    } else if (key.equals("last_value2")) {
+                        values.append("%RH");
+                    }else if (key.equals("last_value1")) {
+                        values.append("ppm");
+                    }
+                    values.append("\n");
                 }
             }
         }

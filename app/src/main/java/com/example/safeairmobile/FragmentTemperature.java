@@ -185,14 +185,12 @@ public class FragmentTemperature extends Fragment {
         lineChart.getDescription().setEnabled(false);
         lineChart.animateX(1000);
 
-        // Actualizar el valor actual
         if (!values.isEmpty()) {
             float currentValue = values.get(values.size() - 1);
             TextView currentValueTextView = getView().findViewById(R.id.currentValueTextView);
-            currentValueTextView.setText(String.format(Locale.getDefault(), "Valor Actual: %.2f", currentValue));
+            currentValueTextView.setText(String.format(Locale.getDefault(), "Valor Actual: %.2f"+"°C", currentValue));
         }
 
-        // Configurar sombreado debajo de la línea
         int startColor = Color.parseColor("#80ADD8E6");
         int endColor = Color.TRANSPARENT;
         GradientDrawable gradientDrawable = new GradientDrawable(

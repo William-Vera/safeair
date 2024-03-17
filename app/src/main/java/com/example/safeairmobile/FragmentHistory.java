@@ -184,7 +184,6 @@ public class FragmentHistory extends Fragment {
         void bind(Datos datos) {
             descripcionTextView.setText(datos.getDescripcion());
 
-            // Parsear la fecha y hora
             String fechaHoraOriginal = datos.getFecha_hora();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             Date fechaHora = null;
@@ -194,7 +193,6 @@ public class FragmentHistory extends Fragment {
                 e.printStackTrace();
             }
 
-            // Formatear la fecha y hora según el formato deseado
             SimpleDateFormat dateFormatOutput = new SimpleDateFormat("EEEE dd 'de' MMMM 'de' yyyy 'a las' HH:mm", new Locale("es", "ES"));
             String fechaHoraFormateada = dateFormatOutput.format(fechaHora);
             fechaHoraTextView.setText(fechaHoraFormateada);
