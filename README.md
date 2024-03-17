@@ -6,6 +6,8 @@
 ![image](https://github.com/William-Vera/safeair/assets/108200901/0b37e3a7-5140-4edc-a297-423e9b6287b6)
 ![image](https://github.com/William-Vera/safeair/assets/108200901/58b8bbfc-2743-40a0-b016-ed1df84ffb37)
 ![image](https://github.com/William-Vera/safeair/assets/108200901/030b08e1-68b3-4d87-8a21-b2640265dbe3)
+![image](https://github.com/William-Vera/safeair/assets/108200901/efbff219-6775-494b-8917-0aa6ada05813)
+
 Generación de PDF
 ![image](https://github.com/William-Vera/safeair/assets/108200901/e2f60c81-954f-4fc9-b10c-a2dfef103bc8)
 
