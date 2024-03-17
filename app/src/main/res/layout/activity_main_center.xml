@@ -95,5 +95,10 @@
         app:headerLayout="@layout/cabecera"
         app:menu="@menu/menu2" />
 
+    <!--<androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewNotificaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />-->
+
 </androidx.drawerlayout.widget.DrawerLayout>
 

@@ -1,19 +1,27 @@
 package com.example.safeairmobile;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,9 +45,14 @@ import android.graphics.drawable.LayerDrawable;
 
 
 import java.io.Console;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -102,6 +115,7 @@ public class FragmentAir extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sensors, container, false);
         lineChart = view.findViewById(R.id.lineChartt);
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -111,6 +125,7 @@ public class FragmentAir extends Fragment {
         setupFirebaseListener();
         setupDataUpdateRunnable();
     }
+
 
     private void setupFirebaseListener() {
         databaseReference = FirebaseDatabase.getInstance().getReference("lecturas_sensor");
@@ -212,6 +227,54 @@ public class FragmentAir extends Fragment {
         }
         if (handler != null && dataUpdateRunnable != null) {
             handler.removeCallbacks(dataUpdateRunnable);
+        }
+    }
+
+    private void generateAndSavePdf() {
+        PdfDocument pdfDocument = new PdfDocument();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(lineChart.getWidth(), lineChart.getHeight(), 1).create();
+        PdfDocument.Page page = pdfDocument.startPage(pageInfo);
+        Canvas canvas = page.getCanvas();
+
+        lineChart.draw(canvas);
+
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(50);
+        paint.setTextAlign(Paint.Align.CENTER);
+        float titlePositionY = 80;
+        canvas.drawText("Calidad del Aire", pageInfo.getPageWidth() / 2, titlePositionY, paint);
+
+        paint.setTextSize(25);
+        paint.setTextAlign(Paint.Align.CENTER);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd 'de' MMMM 'a las' HH:mm", Locale.getDefault());
+        String currentDateAndTime = sdf.format(new Date());
+        float dateTimePositionY = titlePositionY + 70;
+        canvas.drawText(currentDateAndTime, pageInfo.getPageWidth() / 2, dateTimePositionY, paint);
+
+        pdfDocument.finishPage(page);
+
+        String fileName = "grafico_calidad_aire.pdf";
+        File file = new File(Environment.getExternalStorageDirectory(), fileName);
+        try {
+            pdfDocument.writeTo(new FileOutputStream(file));
+            pdfDocument.close();
+            Toast.makeText(getContext(), "PDF descargado exitosamente", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Error al descargar el PDF", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.mnuDownloadPDF) {
+            generateAndSavePdf();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 }

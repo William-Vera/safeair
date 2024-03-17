@@ -5,16 +5,21 @@
     <item
         android:id="@+id/mnuConfig"
         android:icon="@drawable/ic_passsword"
-        android:title="Config"
+        android:title="Configuración"
         app:showAsAction="never" />
     <item
-        android:id="@+id/mnuBuscar"
+        android:id="@+id/mnuDownloadPDF"
+        android:title="Descargar PDF"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/mnuNotificacion"
         android:icon="@drawable/ic_notification"
-        android:title="Notifiaciones"
+        android:title="Notificaciones"
         app:showAsAction="always" />
     <!--<item
         android:id="@+id/mnuNuevo"
         android:icon="@drawable/ic_passsword"
         android:title="Nuevo"
         app:showAsAction="always|withText" />-->
+
 </menu>

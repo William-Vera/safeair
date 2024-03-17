@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -214,7 +217,7 @@ public class FragmentHistory extends Fragment {
         private boolean last_values2;
 
         public Datos() {
-            // Constructor vacío requerido para Firebase
+
         }
 
         public String getDescripcion() {
@@ -246,5 +249,16 @@ public class FragmentHistory extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu1, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.mnuDownloadPDF);
+        menuItem.setVisible(false);
+        super.onPrepareOptionsMenu(menu);
+    }
 
 }

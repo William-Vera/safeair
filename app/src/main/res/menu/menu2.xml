@@ -22,10 +22,10 @@
             android:id="@+id/menu_seccion_6"
             android:icon="@drawable/ic_humedad"
             android:title="Humedad"/>
-        <item
+        <!--<item
             android:id="@+id/menu_seccion_4"
             android:icon="@drawable/ic_acciones"
-            android:title="Acciones/Medidas"/>
+            android:title="Acciones/Medidas"/>-->
         <item
             android:id="@+id/menu_seccion_5"
             android:icon="@drawable/ic_history"
